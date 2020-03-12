@@ -1,3 +1,4 @@
+// go run ./main.go
 // Copyright (C) 2020  Thenagi<thenagi@ruiko.net>  https://www.thenagi.com/
 //
 // This program is free software: you can redistribute it and/or modify
@@ -46,14 +47,14 @@ import (
 )
 
 func run() error {
-	width := 640
+	width := 1050
 
 	text := `最像素BDF字库 12x12像素字体
 
-英：All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.
-简：人人生而自由，在尊严和权利上一律平等。他们赋有理性和良心，并应以兄弟关系的精神相对待。
-繁：人生而自由；在尊嚴及權利上均各平等。人各賦有理性良知，誠應和睦相處，情同手足。
-日：すべての人間は、生れながらにして自由であり、かつ、尊厳と権利とについて平等である。人間は、理性と良心とを授けられており、互いに同胞の精神をもって行動しなければならない。
+英：All human beings are born free and equal in dignity and rights.They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.
+简：人人生而自由,在尊严和权利上一律平等.他们赋有理性和良心,并应以兄弟关系的精神相对待.
+繁：人生而自由;在尊嚴及權利上均各平等.人各賦有理性良知,誠應和睦相處,情同手足.
+日：すべての人間は,生れながらにして自由であり,かつ,尊厳と権利とについて平等である.人間は,理性と良心とを授けられており,互いに同胞の精神をもって行動しなければならない.
 `
 
 	const (
@@ -62,15 +63,11 @@ func run() error {
 	)
 
 	var (
-		dotX int
-		dotY int
-		//glyphWidth  int
+		dotY        int
 		glyphHeight int
 	)
 
-	dotX = 12
 	dotY = 12
-	//glyphWidth = 12
 	glyphHeight = 12
 
 	height := glyphHeight*len(strings.Split(strings.TrimSpace(text), "\n")) + offsetX*2
@@ -86,12 +83,12 @@ func run() error {
 		Dst:  dst,
 		Src:  image.NewUniform(color.Black),
 		Face: f,
-		Dot:  fixed.P(dotX+offsetX, dotY+offsetY),
+		Dot:  fixed.P(offsetX, dotY+offsetY),
 	}
 
 	for _, l := range strings.Split(text, "\n") {
 		d.DrawString(l)
-		d.Dot.X = fixed.I(dotX + offsetX)
+		d.Dot.X = fixed.I(offsetX)
 		d.Dot.Y += f.Metrics().Height
 	}
 
